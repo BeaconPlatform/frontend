@@ -1,0 +1,25 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "es5",
+    "sourceMap": true,
+    "noImplicitAny": false,
+    "removeComments": true
+  },
+  "files": [
+    "typings/index.d.ts",
+    "application/lib.d.ts",
+    "configuration/environment.ts",
+    "application/configuration.ts",
+    "application/dependencies.ts",
+    "application/entry.ts",
+    "application/modules.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
