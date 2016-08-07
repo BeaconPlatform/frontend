@@ -3,6 +3,7 @@ var webpack               = require('webpack');
 webpack.HtmlWebpackPlugin = require('html-webpack-plugin');
 webpack.ExtractTextPlugin = require('extract-text-webpack-plugin');
 webpack.CopyWebpackPlugin = require('copy-webpack-plugin');
+var path                  = require('path');
 var childProcess          = require('child_process');
 var _                     = require('lodash');
 
@@ -17,11 +18,30 @@ var version       = _.trim(childProcess.execSync('git rev-parse --short HEAD').t
 var javascriptFilenameFormat  = 'assets/js/[name]' + (PRODUCTION ? '-' + version : '') + '.js';
 var stylesheetFilenameFormat  = 'assets/css/[name]' + (PRODUCTION ? '-' + version : '') + '.css';
 
+var modules    = [];
+var modulePath = 'application/modules/';
+
+require('fs').readdirSync(modulePath).map(
+  function(filename) {
+    if (filename.indexOf('.ts') !== -1) {
+      modules.push(modulePath + filename);
+    }
+  }
+);
+
 module.exports = {
   entry: {
-    application: [
+    application: [].concat([
       'application/entry',
       'ui/sass/application'
+    ], modules),
+    vendor: [
+      'angular/angular',
+      'angular-ui-router/release/angular-ui-router',
+      'angular-ui-router.statehelper/statehelper',
+      'angular-ui-bootstrap/dist/ui-bootstrap-tpls',
+      'bootstrap/dist/css/bootstrap.css',
+      'bootstrap/dist/js/bootstrap.js'
     ]
   },
   output: {
@@ -41,15 +61,8 @@ module.exports = {
     new webpack.CopyWebpackPlugin([
       { from: 'ui/images/', to: 'assets/images' }
     ]),
-    new webpack.optimize.UglifyJsPlugin(
-      {
-        warning: false,
-        mangle: true,
-        comments: false
-      }
-    ),
     new HtmlWebpackPlugin({
-      template: './ui/index.html',
+      template: './ui/templates/index.html',
       inject: 'body',
       hash: true
     }),
@@ -58,7 +71,10 @@ module.exports = {
       jQuery: 'jquery',
       'window.jQuery': 'jquery',
       'window.jquery': 'jquery'
-    })
+    }),
+    new webpack.CopyWebpackPlugin([
+      { from: 'ui/templates/common', to: 'assets/templates/common' }
+    ])
   ],
   module: {
     loaders: [
@@ -96,5 +112,6 @@ module.exports = {
         loader: 'url'
       }
     ]
-  }
+  },
+  progress: true
 };

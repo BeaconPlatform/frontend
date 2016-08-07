@@ -1,9 +1,11 @@
 {
   "globalDependencies": {
     "angular": "registry:dt/angular#1.5.0+20160517064839",
+    "angular-ui-router": "registry:dt/angular-ui-router#1.1.5+20160707113237",
     "bootstrap": "registry:dt/bootstrap#3.3.5+20160316155526",
     "jquery": "registry:dt/jquery#1.10.0+20160417213236",
     "jwt-decode": "registry:dt/jwt-decode#1.4.0+20160317120654",
+    "q": "registry:dt/q#0.0.0+20160613154756",
     "source-map": "registry:dt/source-map#0.0.0+20160317120654",
     "uglify-js": "registry:dt/uglify-js#2.6.1+20160316155526"
   },
